@@ -3,6 +3,8 @@ import api from '../../services/api';
 
 import camera from '../../assets/camera.svg';
 
+import './styles.css';
+
 export default function New({ history }) {
     const [thumbnail, setThumbnail] = useState(null);
     const [company, setCompany] = useState('');
@@ -13,7 +15,9 @@ export default function New({ history }) {
         return thumbnail ? URL.createObjectURL(thumbnail) : null
     }, [thumbnail]);
     
-    async function handleSubmit() {
+    async function handleSubmit(event) {
+        event.preventDefault();
+        
         const data = new FormData();
         const user_id = localStorage.getItem('user');
         
