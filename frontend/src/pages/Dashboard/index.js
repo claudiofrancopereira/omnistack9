@@ -10,6 +10,7 @@ export default function Dashboard() {
     const [requests, setRequests] = useState([]);
 
     const user_id = localStorage.getItem('user');
+
     const socket = useMemo(() => socketio('http://192.168.15.3:3333', {
         query: { user_id },
     }), [user_id]);
@@ -18,8 +19,8 @@ export default function Dashboard() {
         socket.on('booking_request', data => {
             setRequests([...requests, data]);
         });
-
-    }, [requests, socket]);
+        
+    }, [requests,socket]);
 
     useEffect(() => {
         async function loadSpots() {
@@ -39,13 +40,13 @@ export default function Dashboard() {
     async function handleAccept(id) {
         await api.post(`/bookings/${id}/approvals`);
 
-        setRequests(requests.filter(request => request._id !== id))
+        setRequests(requests.filter(request => request._id !== id));
     }
     
     async function handleReject(id) {
         await api.post(`/bookings/${id}/rejections`);
 
-        setRequests(requests.filter(request => request._id !== id))
+        setRequests(requests.filter(request => request._id !== id));
     }
 
     return (
